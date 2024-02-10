@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "postinstall": "node node_modules/puppeteer/install.js",
+        "postinstall": "node node_modules/puppeteer/install.mjs",
         "start": "next start",
         "lint": "next lint",
         "analyze": "cross-env ANALYZE=true next build"
@@ -59,6 +59,7 @@
         "tailwindcss-animate": "^1.0.7",
         "typescript": "5.2.2",
         "use-debounce": "^10.0.0",
+        "use-intl": "3",
         "xlsx": "^0.18.5",
         "xml2js": "^0.6.2",
         "zod": "^3.22.2"
@@ -73,6 +74,6 @@
         "@types/xml2js": "^0.4.13",
         "cross-env": "^7.0.3",
         "ignore-loader": "^0.1.2",
-        "puppeteer": "^21.3.1"
+        "puppeteer": "^21.11.0"
     }
 }
