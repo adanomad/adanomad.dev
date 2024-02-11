@@ -250,10 +250,6 @@ const InvoiceTemplate2 = (data: InvoiceType) => {
                                 Bank: {details.paymentInformation?.bankName}
                             </p>
                             <p className="text-sm">
-                                Account name:{" "}
-                                {details.paymentInformation?.accountName}
-                            </p>
-                            <p className="text-sm">
                                 Account no:{" "}
                                 {details.paymentInformation?.accountNumber}
                             </p>

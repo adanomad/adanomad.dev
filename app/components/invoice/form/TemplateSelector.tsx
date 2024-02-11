@@ -36,8 +36,8 @@ const TemplateSelector = () => {
     const templates = [
         {
             id: 1,
-            name: "Template 1",
-            description: "Template 1 description",
+            name: "Adanomad",
+            description: "Adanomad template",
             img: template1,
             component: <InvoiceTemplate1 {...formValues} />,
         },

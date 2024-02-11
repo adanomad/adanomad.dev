@@ -52,6 +52,9 @@
             "paymentInfo": {
                 "heading": "Payment Information",
                 "bankName": "Bank Name",
+                "bankAddress": "Bank Address",
+                "accountType": "Account Type",
+                "routingNumber": "Routing Number",
                 "accountName": "Account Name",
                 "accountNumber": "Account Number"
             },

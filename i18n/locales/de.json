@@ -53,6 +53,9 @@
                 "heading": "Zahlungsinformationen",
                 "bankName": "Bank",
                 "accountName": "Kontoinhaber",
+                "bankAddress": "Bank Address",
+                "accountType": "Account Type",
+                "routingNumber": "Routing Number",
                 "accountNumber": "Kontonummer"
             },
             "summary": {

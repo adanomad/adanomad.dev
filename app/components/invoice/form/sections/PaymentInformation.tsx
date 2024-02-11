@@ -19,9 +19,21 @@ const PaymentInformation = () => {
                     vertical
                 />
                 <FormInput
-                    name="details.paymentInformation.accountName"
-                    label={_t("form.steps.paymentInfo.accountName")}
-                    placeholder={_t("form.steps.paymentInfo.accountName")}
+                    name="details.paymentInformation.bankAddress"
+                    label={_t("form.steps.paymentInfo.bankAddress")}
+                    placeholder={_t("form.steps.paymentInfo.bankAddress")}
+                    vertical
+                />
+                <FormInput
+                    name="details.paymentInformation.accountType"
+                    label={_t("form.steps.paymentInfo.accountType")}
+                    placeholder={_t("form.steps.paymentInfo.accountType")}
+                    vertical
+                />
+                <FormInput
+                    name="details.paymentInformation.routingNumber"
+                    label={_t("form.steps.paymentInfo.routingNumber")}
+                    placeholder={_t("form.steps.paymentInfo.routingNumber")}
                     vertical
                 />
                 <FormInput
@@ -34,5 +46,6 @@ const PaymentInformation = () => {
         </section>
     );
 };
+
 
 export default PaymentInformation;

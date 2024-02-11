@@ -19,6 +19,12 @@ const InvoiceTemplate = (data: InvoiceType) => {
         <InvoiceLayout data={data}>
             <div className="flex justify-between">
                 <div>
+                <h2 className="text-xl md:text-xl font-semibold text-gray-800">
+                    Invoice {" "}
+                        <span className="mt-1 text-gray-500">
+                            {details.invoiceNumber}
+                        </span>
+                    </h2>
                     {details.invoiceLogo && (
                         <img
                             src={details.invoiceLogo}
@@ -27,41 +33,44 @@ const InvoiceTemplate = (data: InvoiceType) => {
                             alt={`Logo of ${sender.name}`}
                         />
                     )}
-                    <h1 className="mt-2 text-lg md:text-xl font-semibold text-blue-600">
-                        {sender.name}
-                    </h1>
                 </div>
                 <div className="text-right">
-                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
-                        Invoice #
+                    <h2 className="text-lg md:text-xl font-semibold text-blue-600">
+                        {sender.name}
                     </h2>
-                    <span className="mt-1 block text-gray-500">
-                        {details.invoiceNumber}
-                    </span>
-                    <address className="mt-4 not-italic text-gray-800">
+                    <address className="mt-4 not-italic text-gray-500">
                         {sender.address}
                         <br />
-                        {sender.zipCode}, {sender.city}
+                        {sender.city} {sender.state} 
                         <br />
-                        {sender.country}
+                        {sender.country} {sender.zipCode}
                         <br />
+                        <a href={`mailto:${sender.email}`}>{sender.email}</a>
+                        <br />
+                        <a href={`tel:${sender.phone}`}>{sender.phone}</a>
+                        <a href={`website:${sender.website}`}>{sender.website}</a>
                     </address>
                 </div>
             </div>
 
             <div className="mt-6 grid sm:grid-cols-2 gap-3">
                 <div>
-                    <h3 className="text-lg font-semibold text-gray-800">
-                        Bill to:
-                    </h3>
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-xl font-semibold text-gray-800">
+                        For: {" "}
+                        <span className="text-blue-600">
                         {receiver.name}
+                    </span>
+
                     </h3>
                     <address className="mt-2 not-italic text-gray-500">
-                        {receiver.address}, {receiver.zipCode}
+                        {receiver.address} {receiver.zipCode}
                         <br />
-                        {receiver.city}, {receiver.country}
+                        {receiver.city} {receiver.state} {receiver.country}
                         <br />
+                        <a href={`mailto:${receiver.email}`}>{receiver.email}</a>
+                        <br />
+                        <a href={`tel:${receiver.phone}`}>{receiver.phone}</a>
+                        <a href={`website:${receiver.website}`}>{receiver.website}</a>
                     </address>
                 </div>
                 <div className="sm:text-right space-y-2">
@@ -104,7 +113,7 @@ const InvoiceTemplate = (data: InvoiceType) => {
                             Rate
                         </div>
                         <div className="text-right text-xs font-medium text-gray-500 uppercase">
-                            Amount
+                            Total
                         </div>
                     </div>
                     <div className="hidden sm:block border-b border-gray-200"></div>
@@ -120,17 +129,17 @@ const InvoiceTemplate = (data: InvoiceType) => {
                                     </p>
                                 </div>
                                 <div className="border-b border-gray-300">
-                                    <p className="text-gray-800">
+                                    <p className="text-xs text-gray-800">
                                         {item.quantity}
                                     </p>
                                 </div>
                                 <div className="border-b border-gray-300">
-                                    <p className="text-gray-800">
+                                    <p className="text-xs text-gray-800">
                                         {item.unitPrice} {details.currency}
                                     </p>
                                 </div>
                                 <div className="border-b border-gray-300">
-                                    <p className="sm:text-right text-gray-800">
+                                    <p className="text-xs sm:text-right text-gray-800">
                                         {item.total} {details.currency}
                                     </p>
                                 </div>
@@ -228,41 +237,63 @@ const InvoiceTemplate = (data: InvoiceType) => {
             <div>
                 <div className="my-4">
                     <div className="my-2">
-                        <p className="font-semibold text-blue-600">
-                            Additional notes:
-                        </p>
-                        <p className="font-regular text-gray-800">
+                        <p className="text-blue-600">
+                            Additional notes:{" "}
+                            <span className="text-gray-800">
                             {details.additionalNotes}
-                        </p>
-                    </div>
-                    <div className="my-2">
-                        <p className="font-semibold text-blue-600">
-                            Payment terms:
-                        </p>
-                        <p className="font-regular text-gray-800">
-                            {details.paymentTerms}
-                        </p>
-                    </div>
-                    <div className="my-2">
-                        <span className="font-semibold text-md text-gray-800">
-                            Please send the payment to this address
-                            <p className="text-sm">
-                                Bank: {details.paymentInformation?.bankName}
-                            </p>
-                            <p className="text-sm">
-                                Account name:{" "}
-                                {details.paymentInformation?.accountName}
-                            </p>
-                            <p className="text-sm">
-                                Account no:{" "}
-                                {details.paymentInformation?.accountNumber}
-                            </p>
                         </span>
+                        </p>
                     </div>
+                    <div className="my-2">
+                        <p className="text-blue-600">
+                            Payment terms:{" "}
+                            <span className="text-gray-800">
+                            {details.paymentTerms}
+                        </span>
+
+                        </p>
+                    </div>
+
+                    <div className="my-2">
+                    <span className="text-md text-gray-800">
+                        Please wire or ACH the payment to:
+                        <table className="text-sm">
+                            <tbody>
+                                <tr>
+                                    <td>Bank Name:</td>
+                                    <td><strong>{details.paymentInformation?.bankName}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Account Name:</td>
+                                    <td><strong>{details.paymentInformation?.accountName}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Bank Address:</td>
+                                    <td><strong>{details.paymentInformation?.bankAddress}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Account Type:</td>
+                                    <td><strong>{details.paymentInformation?.accountType}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Routing no:</td>
+                                    <td><strong>{details.paymentInformation?.routingNumber}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Account no:</td>
+                                    <td><strong>{details.paymentInformation?.accountNumber}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </span>
+                </div>
+
+
+
                 </div>
                 <p className="text-gray-500 text-sm">
-                    If you have any questions concerning this invoice, use the
-                    following contact information:
+                    If you have any questions about this invoice, please
+                    contact:
                 </p>
                 <div>
                     <p className="block text-sm font-medium text-gray-800">
@@ -284,6 +315,9 @@ const InvoiceTemplate = (data: InvoiceType) => {
                         height={60}
                         alt={`Signature of ${sender.name}`}
                     />
+                    <p className="text-sm text-gray-500">
+                        {sender.email} on behalf of {sender.name}
+                    </p>
                 </div>
             ) : details.signature?.data ? (
                 <div className="mt-6">

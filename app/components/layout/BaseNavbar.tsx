@@ -23,13 +23,14 @@ const BaseNavbar = () => {
             <nav>
                 <Card className="flex flex-wrap justify-between items-center px-5 gap-5">
                     <Link href={"/"}>
-                        <Image
+                        {/* <Image
                             src={Logo}
                             alt="Invoify Logo"
                             width={190}
                             height={100}
                             loading="eager"
-                        />
+                        /> */}
+                        Adanomad.dev
                     </Link>
                     {/* ? DEV Only */}
                     {devEnv && <DevDebug />}

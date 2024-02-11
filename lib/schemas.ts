@@ -36,25 +36,24 @@ const fieldValidators = {
         .max(30, { message: "Must be between 5 and 30 characters" }),
     phone: z
         .string()
-        .min(1, { message: "Must be between 1 and 50 characters" })
+        .min(0, { message: "Must be between 0 and 50 characters" })
         .max(50, {
-            message: "Must be between 1 and 50 characters",
+            message: "Must be between 0 and 50 characters",
         }),
 
     // Dates
     date: z
-        .date()
+        .string()
+        .refine((dateString) => !isNaN(new Date(dateString).getTime()), {
+            message: 'Invalid date format',
+        })
         .transform((date) =>
             new Date(date).toLocaleDateString("en-US", DATE_OPTIONS)
         ),
 
     // Items
-    quantity: z.coerce
-        .number()
-        .min(1, { message: "Must be a number greater than 0" }),
-    unitPrice: z.coerce
-        .number()
-        .min(1, { message: "Must be a number greater than 0" }),
+    quantity: z.coerce.number(),
+    unitPrice: z.coerce.number(),
 
     // Strings
     string: z.string(),
@@ -90,9 +89,11 @@ const InvoiceSenderSchema = z.object({
     address: fieldValidators.address,
     zipCode: fieldValidators.zipCode,
     city: fieldValidators.city,
+    state: fieldValidators.stringOptional,
     country: fieldValidators.country,
     email: fieldValidators.email,
     phone: fieldValidators.phone,
+    website: fieldValidators.stringOptional,
     customInputs: z.array(CustomInputSchema).optional(),
 });
 
@@ -101,9 +102,11 @@ const InvoiceReceiverSchema = z.object({
     address: fieldValidators.address,
     zipCode: fieldValidators.zipCode,
     city: fieldValidators.city,
+    state: fieldValidators.stringOptional,
     country: fieldValidators.country,
     email: fieldValidators.email,
     phone: fieldValidators.phone,
+    website: fieldValidators.stringOptional,
     customInputs: z.array(CustomInputSchema).optional(),
 });
 
@@ -117,7 +120,10 @@ const ItemSchema = z.object({
 
 const PaymentInformationSchema = z.object({
     bankName: fieldValidators.stringMin1,
+    bankAddress: fieldValidators.stringMin1,
     accountName: fieldValidators.stringMin1,
+    accountType: fieldValidators.string,
+    routingNumber: fieldValidators.stringMin1,
     accountNumber: fieldValidators.stringMin1,
 });
 
