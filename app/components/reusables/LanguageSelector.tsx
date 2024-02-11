@@ -3,7 +3,11 @@
 import { useParams } from "next/navigation";
 
 // Next Intl
-import { useRouter } from "next-intl/client"; // This useRouter is wrapped with next/navigation useRouter
+
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
+const locales = ['en', 'de'] as const;
+const {Link, useRouter, usePathname, redirect} = createSharedPathnamesNavigation({locales});
+
 
 // ShadCn
 import {
