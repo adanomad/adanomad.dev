@@ -34,6 +34,8 @@ import { JSONLD, ROOTKEYWORDS } from "@/lib/seo";
 // Variables
 import { BASE_URL, GOOGLE_SC_VERIFICATION, LOCALES } from "@/lib/variables";
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
     title: "Adanomad.dev | Invoice Generator",
     description:
