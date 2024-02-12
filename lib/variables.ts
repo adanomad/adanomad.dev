@@ -107,17 +107,18 @@ export const SHORT_DATE_OPTIONS: Intl.DateTimeFormatOptions = {
  */
 export const FORM_DEFAULT_VALUES = {
     sender: {
-        name: "",
-        address: "",
-        zipCode: "",
-        city: "",
-        country: "",
-        email: "",
-        phone: "",
-        customInputs: [],
-    },
+        name: "14822579 Canada Inc.",
+        website: "https://adanomad.com/",
+        address: "8 Main St",
+        city: "Hamilton",
+        state: "Ontario",
+        zipCode: "X9X 0X1",
+        country: "Canada",
+        email: "jason@adanomad.com",
+        customInputs: []
+      },
     receiver: {
-        name: "",
+        name: "Client Name",
         address: "",
         zipCode: "",
         city: "",
@@ -127,18 +128,18 @@ export const FORM_DEFAULT_VALUES = {
         customInputs: [],
     },
     details: {
-        invoiceLogo: "",
-        invoiceNumber: "",
+        invoiceLogo: invoice.details.invoiceLogo,
+        invoiceNumber: "ABC-001",
         invoiceDate: "",
         dueDate: "",
         items: [
             {
-                name: "",
-                description: "",
-                quantity: 0,
-                unitPrice: 0,
-                total: 0,
-            },
+                name: "Week 1",
+                description: "Wed. Jan. 10 to Fri. Jan. 12",
+                quantity: "3",
+                unitPrice: "700",
+                total: "2100.00"
+              },
         ],
         currency: "USD",
         language: "English",
