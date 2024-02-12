@@ -31,37 +31,37 @@ export const invoice =
       {
         "name": "Week 1",
         "description": "Wed. Jan. 10 to Fri. Jan. 12",
-        "quantity": "3",
-        "unitPrice": "700",
-        "total": "2100.00"
+        "quantity": 3,
+        "unitPrice": 700,
+        "total": 2100.00
       },
       {
         "name": "Week 2",
         "description": "Mon. Jan. 15 to Fri. Jan. 19",
-        "quantity": "5",
-        "unitPrice": "700",
-        "total": "3500.00"
+        "quantity": 5,
+        "unitPrice": 700,
+        "total": 3500.00
       },
       {
         "name": "Week 3",
         "description": "Sun. Jan 21 to Fri. Jan. 26",
-        "quantity": "6",
-        "unitPrice": "700",
-        "total": "4200.00"
+        "quantity": 6,
+        "unitPrice": 700,
+        "total": 4200.00
       },
       {
         "name": "Week 4",
         "description": "Mon. Jan. 29 to Fri. Feb. 2",
-        "quantity": "5",
-        "unitPrice": "700",
-        "total": "3500.00"
+        "quantity": 5,
+        "unitPrice": 700,
+        "total": 3500.00
       },
       {
         "name": "Retainer Credit",
         "description": "Initial retainer paid on Jan. 10, 2024",
-        "quantity": "1",
-        "unitPrice": "-3000",
-        "total": "-3000.00"
+        "quantity": 1,
+        "unitPrice":3000,
+        "total":-3000.00
       }
     ],
     "currency": "USD",

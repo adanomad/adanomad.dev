@@ -136,9 +136,9 @@ export const FORM_DEFAULT_VALUES = {
             {
                 name: "Week 1",
                 description: "Wed. Jan. 10 to Fri. Jan. 12",
-                quantity: "3",
-                unitPrice: "700",
-                total: "2100.00"
+                quantity: 3,
+                unitPrice: 700,
+                total: 2100.00
               },
         ],
         currency: "USD",
