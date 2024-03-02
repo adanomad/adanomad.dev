@@ -264,8 +264,6 @@ export const InvoiceContextProvider = ({
           saveInvoiceSuccess();
         }
 
-        localStorage.setItem("savedInvoices", JSON.stringify(savedInvoices));
-
         setSavedInvoices(savedInvoices);
       }
     }
@@ -346,10 +344,7 @@ export const InvoiceContextProvider = ({
    * Loads the saved invoices from local storage.
    */
   const loadKVSavedInvoices = (invoices: InvoiceType[]) => {
-    console.log("loadKVSavedInvoices", invoices);
     try {
-      localStorage.setItem("savedInvoices", JSON.stringify(invoices));
-
       setSavedInvoices(invoices);
     } catch (error) {
       console.error("Error loading saved invoices:", error);
