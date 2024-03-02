@@ -27,6 +27,8 @@ type InvoiceExportModalType = {
 
 const InvoiceExportModal = ({ children }: InvoiceExportModalType) => {
   const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState<string>("");
+  const [filename, setFilename] = useState<string>("");
 
   const { invoicePdfLoading, exportInvoiceAs } = useInvoiceContext();
   return (
@@ -44,14 +46,29 @@ const InvoiceExportModal = ({ children }: InvoiceExportModalType) => {
         {/* Export options here */}
 
         <div className="flex flex-wrap flex-row gap-5">
-          <BaseButton
-            tooltipLabel="Export Invoice as JSON"
-            variant="outline"
-            disabled={invoicePdfLoading}
-            onClick={() => exportInvoiceAs(ExportTypes.JSON)}
-          >
-            Export as JSON
-          </BaseButton>
+          <div className="flex flex-wrap flex-row gap-5">
+            <input
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
+            <input
+              placeholder="Enter filename"
+              value={filename}
+              onChange={(e) => setFilename(e.target.value)}
+            />
+            <BaseButton
+              tooltipLabel="Save to KV"
+              variant="outline"
+              disabled={invoicePdfLoading}
+              onClick={() =>
+                exportInvoiceAs(ExportTypes.KV, username, filename)
+              }
+            >
+              Save to KV
+            </BaseButton>
+          </div>
           <BaseButton
             tooltipLabel="Export Invoice as CSV"
             variant="outline"

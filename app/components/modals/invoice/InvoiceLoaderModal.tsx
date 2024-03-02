@@ -17,8 +17,10 @@ import { SavedInvoicesList } from "@/app/components";
 
 // Context
 import { useInvoiceContext } from "@/contexts/InvoiceContext";
+import { listInvoices, upsertInvoice } from "@/lib/store";
 import { useFormContext } from "react-hook-form";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 type InvoiceLoaderModalType = {
   children: React.ReactNode;
@@ -26,10 +28,11 @@ type InvoiceLoaderModalType = {
 
 const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
   const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { reset } = useFormContext();
 
-  const { savedInvoices } = useInvoiceContext();
+  const { savedInvoices, setSavedInvoices } = useInvoiceContext();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -39,20 +42,25 @@ const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
   };
 
   function handleUpload() {
-    // Process the selected file JSON here
     if (selectedFile && selectedFile.type === "application/json") {
       const reader = new FileReader();
       reader.onload = (event) => {
         const jsonData = event.target?.result;
-        // Your JSON processing logic here
-        console.log("JSON Data:", jsonData);
+
         try {
           const parsedData = JSON.parse(jsonData as string);
           reset(parsedData);
+          upsertInvoice(
+            username,
+            parsedData.id ?? uuidv4(),
+            parsedData.filename,
+            parsedData.prefs
+          );
           toast.success("Data loaded successfully");
         } catch (error) {
           toast.error("Error parsing JSON data");
-          console.log("Error parsing JSON data:", error);
+          console.error("Error parsing JSON data:", error);
+          console.error("JSON Data:", jsonData);
         }
       };
       reader.readAsText(selectedFile);
@@ -70,8 +78,30 @@ const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
       <DialogContent>
         <DialogHeader className="pb-2 border-b">
           <DialogTitle>Saved Invoices</DialogTitle>
+
           <DialogDescription>
             You have {savedInvoices.length} saved invoices
+            <div>
+              <label htmlFor="username">Username</label>
+              <input
+                className="m-2"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+
+              <button
+                className="m-2 button"
+                onClick={() => {
+                  listInvoices(username)
+                    .then((invoices) => setSavedInvoices(invoices))
+                    .catch((error) =>
+                      console.error("Error getting invoices:", error)
+                    );
+                }}
+              >
+                Get Invoices
+              </button>
+            </div>
           </DialogDescription>
         </DialogHeader>
 
