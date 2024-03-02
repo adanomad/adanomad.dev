@@ -10,7 +10,6 @@ import { Card } from "@/components/ui/card";
 
 // Components
 import { DevDebug, LanguageSelector, ThemeSwitcher } from "@/app/components";
-import { ToastContainer } from "react-toastify";
 
 const BaseNavbar = () => {
   const devEnv = useMemo(() => {
@@ -35,7 +34,6 @@ const BaseNavbar = () => {
           {devEnv && <DevDebug />}
           <LanguageSelector />
           <ThemeSwitcher />
-          <ToastContainer />
         </Card>
       </nav>
     </header>
