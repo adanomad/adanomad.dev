@@ -17,7 +17,8 @@ import { SavedInvoicesList } from "@/app/components";
 
 // Context
 import { useInvoiceContext } from "@/contexts/InvoiceContext";
-import { listInvoices, upsertInvoice } from "@/lib/store";
+import { upsertInvoice } from "@/lib/store";
+import { getInvoices } from "@/services/invoice/client/getInvoices";
 import { useFormContext } from "react-hook-form";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
@@ -32,7 +33,7 @@ const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { reset } = useFormContext();
 
-  const { savedInvoices, setSavedInvoices } = useInvoiceContext();
+  const { savedInvoices, loadKVSavedInvoices } = useInvoiceContext();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -81,29 +82,32 @@ const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
 
           <DialogDescription>
             You have {savedInvoices.length} saved invoices
-            <div>
-              <label htmlFor="username">Username</label>
-              <input
-                className="m-2"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-              />
-
-              <button
-                className="m-2 button"
-                onClick={() => {
-                  listInvoices(username)
-                    .then((invoices) => setSavedInvoices(invoices))
-                    .catch((error) =>
-                      console.error("Error getting invoices:", error)
-                    );
-                }}
-              >
-                Get Invoices
-              </button>
-            </div>
           </DialogDescription>
         </DialogHeader>
+
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            className="m-2"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+
+          <button
+            className="m-2 button"
+            onClick={() => {
+              getInvoices(username)
+                .then((invoices) => {
+                  loadKVSavedInvoices(invoices);
+                })
+                .catch((error) =>
+                  console.error("Error getting invoices:", error)
+                );
+            }}
+          >
+            Get Invoices
+          </button>
+        </div>
 
         <div>
           <input type="file" onChange={handleFileChange} accept=".json" />

@@ -51,6 +51,7 @@ const defaultInvoiceContext = {
     username?: string,
     filename?: string
   ) => {},
+  loadKVSavedInvoices: (invoices: InvoiceType[]) => {},
 };
 
 export const InvoiceContext = createContext(defaultInvoiceContext);
@@ -341,6 +342,20 @@ export const InvoiceContextProvider = ({
     exportInvoice(exportAs, formValues, username, filename);
   };
 
+  /**
+   * Loads the saved invoices from local storage.
+   */
+  const loadKVSavedInvoices = (invoices: InvoiceType[]) => {
+    console.log("loadKVSavedInvoices", invoices);
+    try {
+      localStorage.setItem("savedInvoices", JSON.stringify(invoices));
+
+      setSavedInvoices(invoices);
+    } catch (error) {
+      console.error("Error loading saved invoices:", error);
+    }
+  };
+
   return (
     <InvoiceContext.Provider
       value={{
@@ -359,6 +374,7 @@ export const InvoiceContextProvider = ({
         deleteInvoice,
         sendPdfToMail,
         exportInvoiceAs,
+        loadKVSavedInvoices,
       }}
     >
       {children}
