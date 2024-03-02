@@ -17,6 +17,7 @@ import { SavedInvoicesList } from "@/app/components";
 
 // Context
 import { useInvoiceContext } from "@/contexts/InvoiceContext";
+import { ToastContainer, toast } from 'react-toastify';
 
 type InvoiceLoaderModalType = {
     children: React.ReactNode;
@@ -25,6 +26,7 @@ type InvoiceLoaderModalType = {
 const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
     const [open, setOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     const { savedInvoices } = useInvoiceContext();
 
@@ -35,20 +37,41 @@ const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
         }
     };
 
-    const handleUpload = () => {
-        // Process the selected file (JSON, CSV, XML, XLSX) here
-        // You can use libraries like papaparse for CSV, xml2js for XML, etc.
-        // Example: Parse CSV file
-        // if (selectedFile && selectedFile.type === 'text/csv') {
-        //     // Your CSV processing logic here
-        // }
+    function handleUpload() {
+        // Process the selected file JSON here
+         if (selectedFile && selectedFile.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const jsonData = event.target?.result;
+                // Your JSON processing logic here
+                console.log("JSON Data:", jsonData);
+            };
+            reader.readAsText(selectedFile);
+        } else {
+            console.log("Unsupported file type");
+        }
+        // Toast the upload status
+        if (selectedFile) {
+            // Show a toast message indicating the upload status
+            const toastMessage = `Uploading ${selectedFile.name}...`;
+            toast(toastMessage);
 
-        // Add your logic to handle different file types
-        // ...
-
+            // Simulate upload progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                setUploadProgress(progress);
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // Show a toast message indicating the upload is complete
+                    const toastMessage = `${selectedFile.name} uploaded successfully!`;
+                    toast(toastMessage);
+                }
+            }, 500);
+        }
         // Close the modal after processing
         setOpen(false);
-    };
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -62,9 +85,16 @@ const InvoiceLoaderModal = ({ children }: InvoiceLoaderModalType) => {
                     </DialogDescription>
                 </DialogHeader>
 
+
                 <div>
-                    <input type="file" onChange={handleFileChange} accept=".json, .csv, .xml, .xlsx" />
+                    <input type="file" onChange={handleFileChange} accept=".json" />
                     <button onClick={handleUpload}>Upload</button>
+                    {selectedFile && (
+                        <div>
+                            <progress value={uploadProgress} max={100} />
+                            <span>{uploadProgress}%</span>
+                        </div>
+                    )}
                 </div>
 
                 <SavedInvoicesList setModalState={setOpen} />
