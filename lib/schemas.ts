@@ -42,7 +42,7 @@ const fieldValidators = {
     }),
 
   // Dates
-  date: z
+  date: z.coerce
     .string()
     .refine((dateString) => !isNaN(new Date(dateString).getTime()), {
       message: "Invalid date format",
